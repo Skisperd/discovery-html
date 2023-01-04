@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>WebBase Validation QA</title>
+    <script src="js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Create forms</h1>
+
+        <form>
+            <label for="nameComplete">Name Complete</label>
+            <input name="nameComplete" type="text" v-model="form.name">
+
+            <label for="e-mail">Email</label>
+            <input name="e-mail" type="text" v-model="form.email">
+
+            <label for="note">Note</label>
+            <input name="note" type="text" v-model="form.note">
+
+            <input type="button" value="Create" @click="addStudy">
+        </form>
+
+        <div>
+            <table class="table">
+                <thead>
+                    <th>Name Complete</th>
+                    <th>E-mail</th>
+                    <th>Note</th>
+                    <th>Actions</th>
+                </thead>
+                <tbody>
+                    <tr v-for="study in studs">
+                        <td>{{study.name}}</td>
+                        <td>{{study.email}}</td>
+                        <td>{{study.note}}</td>
+                        <td>
+                            <button class="danger" @click="deleteStudy(study)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                form: {
+                    name: '',
+                    email: '',
+                    note: '',
+                },
+                studs: [
+                    {name: 'Tiago Dias', email: 'tf.dias@gmail.com', note: 10}
+                ]
+            },
+            methods: {
+                cleanForm: function () {
+                    this.form = {
+                        name: '',
+                        email: '',
+                        note: '',
+                    }
+                },
+                addStudy: function () {
+                    //console.log(this.form)E
+                    this.studs.push(this.form)
+                    this.cleanForm()
+                },
+                deleteStudy: function (study) {
+                    var position = this.studs.indexOf(study)
+                    this.studs.splice(position, 1)
+                    console.log(study)
+                }
+            }
+        })
+    </script>
+    <style>
+        .table {
+            margin-top: 20px;
+            width: 100%;
+            text-align: left;
+        }
+
+        .table th,
+        .table td {
+            border-top: 1px solid #ccc;
+        }
+
+        .table th:last-child .table td:last-child {
+            text-align: right;
+        }
+
+        .danger {
+            background-color: #E91E63;
+            border-color: #E91E63;
+            color: #eee;
+        }
+
+        input {
+            display: block;
+        }
+
+        input[type=button] {
+            background-color: #3F51B5;
+            border-color: #3F51B5;
+            color: #fff;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+
+</html>
